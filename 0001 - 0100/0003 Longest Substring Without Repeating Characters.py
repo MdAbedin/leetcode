@@ -5,9 +5,9 @@ class Solution:
         for start_i in range(len(s)):
             seen = set()
             
-            for end_i in range(start_i, len(s)):
-                if s[end_i] in seen: break
-                seen.add(s[end_i])
+            for i in range(start_i, len(s)):
+                if s[i] in seen: break
+                seen.add(s[i])
                 
             ans = max(ans, len(seen))
             
