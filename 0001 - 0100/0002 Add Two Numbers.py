@@ -8,13 +8,13 @@ class Solution:
         sum_ = 0
         
         multiplier = 1
-        for node in takewhile(lambda x:x, accumulate(repeat(l1), lambda x,_:x.next)):
-            sum_ += multiplier * node.val
+        for node in takewhile(lambda x: x, accumulate(repeat(l1), lambda x,_: x.next)):
+            sum_ += multiplier*node.val
             multiplier *= 10
             
         multiplier = 1
-        for node in takewhile(lambda x:x, accumulate(repeat(l2), lambda x,_:x.next)):
-            sum_ += multiplier * node.val
+        for node in takewhile(lambda x: x, accumulate(repeat(l2), lambda x,_: x.next)):
+            sum_ += multiplier*node.val
             multiplier *= 10
             
         if sum_ == 0: return ListNode(0)
@@ -23,7 +23,7 @@ class Solution:
         cur = ans
         
         while sum_ > 0:
-            sum_, digit = divmod(sum_, 10)
+            sum_, digit = divmod(sum_,10)
             cur.next = ListNode(digit)
             cur = cur.next
         
