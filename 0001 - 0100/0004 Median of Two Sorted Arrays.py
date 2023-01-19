@@ -1,10 +1,5 @@
 class Solution:
-    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
-        total_len = len(nums1) + len(nums2)
-        
-        if total_len == 1: return (nums1 + nums2)[0]
-        if total_len == 2: return (sum(nums1) + sum(nums2)) / 2
-        
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:        
         def find_rank(k):
             def rank_k_or_greater(num):
                 min_rank = bisect_left(nums1, num) + bisect_left(nums2, num)
@@ -13,5 +8,7 @@ class Solution:
                 return min_rank > k or max_rank >= k
             
             return -10**6 + bisect_left(range(-10**6,10**6+1), True, key = rank_k_or_greater)
+        
+        total_len = len(nums1) + len(nums2)
         
         return (find_rank(total_len//2-1 + (total_len%2)) + find_rank(total_len//2)) / 2
