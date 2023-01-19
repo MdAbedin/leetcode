@@ -1,7 +1,7 @@
 class Solution:
     """
-    N1 = number of nodes in l1
-    N2 = number of nodes in l2    
+    N1 = length of l1
+    N2 = length of l2    
     Time:  O(max(N1, N2))
     Space: O(max(N1, N2))
     """
