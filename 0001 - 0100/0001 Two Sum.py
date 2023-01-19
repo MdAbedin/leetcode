@@ -1,6 +1,6 @@
 class Solution:
     """
-    N = len(nums)
+    N = length of nums
     Time:  O(N)
     Space: O(N)
     """
