@@ -1,4 +1,9 @@
 class Solution:
+    """
+    N = length of s
+    Time:  O(N)
+    Space: O(1)
+    """
     def lengthOfLongestSubstring(self, s: str) -> int:
         ans = 0
         
