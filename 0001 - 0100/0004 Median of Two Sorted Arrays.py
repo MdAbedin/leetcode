@@ -14,7 +14,4 @@ class Solution:
             
             return -10**6 + bisect_left(range(-10**6,10**6+1), True, key = rank_k_or_greater)
         
-        if total_len%2 == 1:
-            return find_rank(total_len//2)
-        else:
-            return (find_rank(total_len//2-1) + find_rank(total_len//2)) / 2
+        return (find_rank(total_len//2-1 + (total_len%2)) + find_rank(total_len//2)) / 2
