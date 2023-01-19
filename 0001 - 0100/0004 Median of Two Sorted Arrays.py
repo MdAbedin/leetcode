@@ -1,4 +1,11 @@
 class Solution:
+    """
+    R = size of range of integers in nums1 and nums2
+    N1 = length of nums2
+    N2 = length of nums2
+    Time:  O(log(R) * (log(N1) + log(N2)))
+    Space: O(1)
+    """
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:        
         def find_rank(k):
             def rank_k_or_greater(num):
@@ -11,4 +18,4 @@ class Solution:
         
         total_len = len(nums1) + len(nums2)
         
-        return (find_rank(total_len//2-1 + (total_len%2)) + find_rank(total_len//2)) / 2
+        return (find_rank(total_len//2-1 + total_len%2) + find_rank(total_len//2)) / 2
