@@ -1,11 +1,11 @@
 class Solution:
     def maxVowels(self, s: str, k: int) -> int:
-        vowels = ['a','e','i','o','u']
-        ans = count = sum([s[:k].count(vowel) for vowel in vowels])
-        
-        for i in range(k, len(s)):
-            count += 1 if s[i] in vowels else 0
-            count -= 1 if s[i-k] in vowels else 0
-            ans = max(ans,count)
-            
+        vowels = "aeiou"
+        ans,cur_ans = 0,0
+
+        for i,c in enumerate(s):
+            if c in vowels: cur_ans += 1
+            if i-k >= 0 and s[i-k] in vowels: cur_ans -= 1
+            ans = max(ans,cur_ans)
+
         return ans
