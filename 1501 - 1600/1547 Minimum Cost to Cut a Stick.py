@@ -1,16 +1,9 @@
 class Solution:
     def minCost(self, n: int, cuts: List[int]) -> int:
-        cuts = sorted(cuts)
-        cuts = [0] + cuts + [n]
+        cuts.sort()
         
-        dp = [[float('inf')]*len(cuts) for _ in range(len(cuts))]
-        
-        for size in range(1, len(cuts)):
-            for i in range(len(cuts)-size):
-                if size == 1: dp[i][i+size] = 0
-                else:
-                    cost = cuts[i+size]-cuts[i]
-                    for mid in range(i+1, i+size):
-                        dp[i][i+size] = min(dp[i][i+size], cost + dp[i][mid] + dp[mid][i+size])
-                        
-        return dp[0][-1]
+        @cache
+        def solve(l,r):
+            return 0 if l > r else (cuts[r+1] if r+1 < len(cuts) else n)-(cuts[l-1] if l-1 >= 0 else 0) + min(solve(l,i-1)+solve(i+1,r) for i in range(l,r+1))
+
+        return solve(0,len(cuts)-1)
