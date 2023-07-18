@@ -1,15 +1,14 @@
 class Solution:
     def sortColors(self, nums: List[int]) -> None:
-        """
-        Do not return anything, modify nums in-place instead.
-        """
-        
-        reds, whites = 0, 0
-        
-        for color in nums:
-            if color == 0: reds += 1
-            if color == 1: whites += 1
-                
-        for i in range(reds): nums[i] = 0
-        for i in range(reds, reds+whites): nums[i] = 1
-        for i in range(reds+whites, len(nums)): nums[i] = 2
+        i0,i1 = 0,0
+
+        for i in range(len(nums)):
+            i1 = max(i1,i0)
+            
+            if nums[i] == 0:
+                nums[i0],nums[i] = nums[i],nums[i0]
+                i0 += 1
+
+            if nums[i] == 1:
+                nums[i1],nums[i] = nums[i],nums[i1]
+                i1 += 1
