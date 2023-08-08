@@ -1,44 +1,17 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        if not nums:
-            return -1
-        
-        l, r = 0, len(nums)-1
-        left_segment_end = 0
-        
+        l,r = 0,len(nums)-1
+
         while l <= r:
-            mid = (l+r)//2
-            
-            if nums[mid] >= nums[0]:
-                left_segment_end = mid
-                l = mid+1
+            m = (l+r)//2
+
+            if nums[m] == target: return m
+
+            if nums[m] <= nums[-1]:
+                if nums[m] < target <= nums[-1]: l = m+1
+                else: r = m-1
             else:
-                r = mid-1
-        
-        l, r = 0, left_segment_end
-        
-        while l <= r:
-            mid = (l+r)//2
-            
-            if nums[mid] == target:
-                return mid
-            
-            if target > nums[mid]:
-                l = mid+1
-            else:
-                r = mid-1
-        
-        l, r = left_segment_end+1, len(nums)-1
-        
-        while l <= r:
-            mid = (l+r)//2
-            
-            if nums[mid] == target:
-                return mid
-            
-            if target > nums[mid]:
-                l = mid+1
-            else:
-                r = mid-1
-        
+                if nums[0] <= target < nums[m]: r = m-1
+                else: l = m+1
+
         return -1
