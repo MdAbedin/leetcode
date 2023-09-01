@@ -1,27 +1,23 @@
 class Solution:
     def solve(self, board: List[List[str]]) -> None:
-        """
-        Do not return anything, modify board in-place instead.
-        """
-        bfs = deque()
-        
-        for y in range(len(board)):
-            for x in range(len(board[0])):
-                if (y == 0 or y == len(board)-1 or x == 0 or x == len(board[0])-1) and board[y][x]=='O':
-                    board[y][x] = 'M'
-                    bfs.append([y,x])
-                    
-        while bfs:
-            y,x = bfs.popleft()
-            
-            for dy, dx in [[1,0],[0,1],[-1,0],[0,-1]]:
-                ny, nx = y+dy, x+dx
-                
-                if ny >= 0 and ny < len(board) and nx >= 0 and nx < len(board[0]) and board[ny][nx] == 'O':
-                    board[ny][nx] = 'M'
-                    bfs.append([ny,nx])
-                    
-        for y in range(len(board)):
-            for x in range(len(board[0])):
-                if board[y][x] == 'O': board[y][x] = 'X'
-                if board[y][x] == 'M': board[y][x] = 'O'
+        R,C = len(board),len(board[0])
+        edge_region_o_coords = set()
+
+        for r in range(R):
+            for c in range(C):
+                if not(r in [0,R-1] or c in [0,C-1]) or board[r][c] == "X" or (r,c) in edge_region_o_coords: continue
+
+                edge_region_o_coords.add((r,c))
+                dfs = [(r,c)]
+
+                while dfs:
+                    cr,cc = dfs.pop()
+
+                    for r2,c2 in [[cr+1,cc],[cr-1,cc],[cr,cc+1],[cr,cc-1]]:
+                        if r2 not in range(R) or c2 not in range(C) or board[r2][c2] != "O" or (r2,c2) in edge_region_o_coords: continue
+                        edge_region_o_coords.add((r2,c2))
+                        dfs.append((r2,c2))
+
+        for r in range(R):
+            for c in range(C):
+                if board[r][c] == "O" and (r,c) not in edge_region_o_coords: board[r][c] = "X"
