@@ -11,7 +11,6 @@ class Solution:
             
             for r2,c2 in [[r+1,c],[r-1,c],[r,c+1],[r,c-1]]:
                 if r2 in range(R) and c2 in range(C):
-                    effort2 = max(effort, abs(heights[r][c] - heights[r2][c2]))
-                    if effort2 < bests[r2,c2]:
+                    if (effort2 := max(effort, abs(heights[r][c] - heights[r2][c2]))) < bests[r2,c2]:
                         bests[r2,c2] = effort2
                         heappush(pq, [effort2,r2,c2])
