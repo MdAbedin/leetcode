@@ -1,20 +1,12 @@
 class Solution:
     def find132pattern(self, nums: List[int]) -> bool:
-        lefts = [None]
-        mn = nums[0]
-        
-        for i in range(1,len(nums)):
-            lefts.append(mn if mn < nums[i] else None)
-            mn = min(mn, nums[i])
-        
-        rights = [None]*len(nums)
-        nums_sorted = sorted([[nums[i], i] for i in range(len(nums))], reverse=True)
-        unmatched = []
-        
-        for num,i in nums_sorted:
-            while unmatched and unmatched[0] < i:
-                rights[heappop(unmatched)] = num
-                
-            heappush(unmatched, i)
-        
-        return any(lefts[i] is not None and rights[i] is not None and lefts[i]<rights[i]<nums[i] for i in range(len(nums)))
+        i_nums = []
+        stack = []
+
+        for k,num in enumerate(nums):
+            while stack and stack[-1][0] <= num: stack.pop()
+            if (index := bisect_right(i_nums,(-num,inf))) < len(i_nums) and stack and i_nums[index][1] < stack[-1][1]: return True
+            stack.append((num,k))
+            if not i_nums or num < -i_nums[-1][0]: i_nums.append((-num,k))
+
+        return False
