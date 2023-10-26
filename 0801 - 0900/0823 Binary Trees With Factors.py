@@ -1,17 +1,9 @@
 class Solution:
-    def numFactoredBinaryTrees(self, A: List[int]) -> int:
-        A.sort()
-        nums = set(A)
-        dp = [1]*len(A)
-        ans = 0
-        
-        for i in range(len(A)):
-            for j in range(i):
-                if A[i]/A[j] in nums:
-                    dp[i] += dp[j] * dp[A.index(A[i]//A[j])]
-                    dp[i] = int(dp[i] % (1e9+7))
-            
-            ans += dp[i]
-            ans = int(ans % (1e9+7))
-        
-        return ans
+    def numFactoredBinaryTrees(self, arr: List[int]) -> int:
+        MOD = 10**9+7
+        nums_set = set(arr)
+
+        @cache
+        def solve(x): return (1+sum(solve(num)*solve(x//num) for num in arr if x%num == 0 and x//num in nums_set))%MOD
+
+        return sum(solve(x) for x in arr)%MOD
