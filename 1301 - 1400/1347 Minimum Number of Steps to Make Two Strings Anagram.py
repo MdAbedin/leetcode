@@ -1,6 +1,3 @@
 class Solution:
     def minSteps(self, s: str, t: str) -> int:
-        s_counts = Counter(s)
-        t_counts = Counter(t)
-
-        return len(t) - sum(min(t_counts.get(char,0), count) for char, count in s_counts.items())
+        return sum(abs(c1-c2) for c1,c2 in zip(Counter(ascii_lowercase+s).values(),Counter(ascii_lowercase+t).values()))//2
