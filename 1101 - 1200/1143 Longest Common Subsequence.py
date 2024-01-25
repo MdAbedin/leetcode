@@ -1,16 +1,5 @@
 class Solution:
-    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
-        lcs_row = [0]*len(text1)
-        
-        for i in range(len(text2)):
-            lcs_row_temp = [0]*len(text1)
-            
-            for j in range(len(text1)):
-                if text1[j] == text2[i]:
-                    lcs_row_temp[j] = (lcs_row[j-1] if j-1 >= 0 else 0) + 1
-                else:
-                    lcs_row_temp[j] = max(lcs_row_temp[j-1] if j-1 >= 0 else 0, lcs_row[j])
-                
-            lcs_row = lcs_row_temp
-            
-        return lcs_row[-1]
+    @cache
+    def longestCommonSubsequence(self, text1: str, text2: str, i1 = 0, i2 = 0) -> int:
+        if i1 == len(text1) or i2 == len(text2): return 0
+        return 1+self.longestCommonSubsequence(text1,text2,i1+1,i2+1) if text1[i1] == text2[i2] else max(self.longestCommonSubsequence(text1,text2,i1+1,i2),self.longestCommonSubsequence(text1,text2,i1,i2+1))
