@@ -1,15 +1,17 @@
 class Solution:
     def kInversePairs(self, n: int, k: int) -> int:
         MOD = 10**9+7
-        dp = [1] + [0]*k
+        dp = [1]+[0]*k
 
-        for size in range(2,n+1):
+        for l in range(n):
             dp2 = [0]*(k+1)
-            
-            for i,num in enumerate(dp):
-                dp2[i] += num
-                if i+size < len(dp2): dp2[i+size] -= num
+            s = 0
 
-            dp = list(map(lambda x: x%MOD, accumulate(dp2)))
+            for i in range(k+1):
+                s += dp[i]
+                dp2[i] = s
+                if i-l >= 0: s -= dp[i-l]
 
-        return dp[k]
+            dp = dp2
+
+        return dp[-1]%MOD
