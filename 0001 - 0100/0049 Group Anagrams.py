@@ -1,8 +1,3 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        groups = defaultdict(list)
-        
-        for s in strs:
-            groups[frozenset(Counter(s).items())].append(s)
-            
-        return groups.values()
+        return reduce(lambda d,s: d[tuple(sorted(s))].append(s) or d,strs,defaultdict(list)).values()
