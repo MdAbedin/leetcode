@@ -1,12 +1,9 @@
 class Solution:
     def makeGood(self, s: str) -> str:
-        i = 0
-        
-        while i < len(s)-1:
-          if abs(ord(s[i]) - ord(s[i+1])) == abs(ord('a') - ord('A')):
-            s = s[:i] + s[i+2:]
-            i = 0
-          else:
-            i += 1
-            
-        return s
+        stack = []
+
+        for c in s:
+            if stack and c.isalpha() and stack[-1] == c.swapcase(): stack.pop()
+            else: stack.append(c)
+
+        return "".join(stack)
