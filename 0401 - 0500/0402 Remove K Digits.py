@@ -1,32 +1,19 @@
 class Solution:
     def removeKdigits(self, num: str, k: int) -> str:
-        num = str(num)
-        
-        if len(num) <= k:
-            return '0'
-        
-        l = 0
-        ans = ''
-        k2 = k
-        
-        while k:
-            found = False
-            
-            for i in range(10):
-                for j in range(l,min(l+k+1,len(num))):
-                    if num[j] == str(i):
-                        ans += str(num[j])
-                        
-                        if len(ans) == len(num)-k2:
-                            return str(int(ans))
-                        
-                        k -= j-l
-                        l = j+1
-                        found = True
-                        break
-                        
-                if found:
+        inds = defaultdict(deque)
+        for i,d in enumerate(num): inds[d].append(i)
+
+        ans = []
+        next_ = 0
+
+        for i in range(len(num)-k):
+            for d in digits:
+                while inds[d] and inds[d][0] < next_: inds[d].popleft()
+
+                if inds[d] and inds[d][0] <= next_+k:
+                    ans.append(d)
+                    k -= inds[d][0]-next_
+                    next_ = inds[d][0]+1
                     break
-                    
-        ans += num[l:]
-        return str(int(ans))
+
+        return "0" if not (ans := "".join(ans).lstrip("0")) else ans
