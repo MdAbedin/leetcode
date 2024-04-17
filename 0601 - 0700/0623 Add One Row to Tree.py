@@ -5,6 +5,6 @@ class Solution:
 
         for node in row:
             node.left = TreeNode(val,node.left)
-            node.right = TreeNode(val,None,node.right)
+            node.right = TreeNode(val,right=node.right)
 
         return root.left
