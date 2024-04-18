@@ -1,16 +1,3 @@
 class Solution:
     def islandPerimeter(self, grid: List[List[int]]) -> int:
-        ans = 0
-        
-        for y in range(len(grid)):
-          for x in range(len(grid[0])):
-            if grid[y][x] == 1:
-              ans += 4
-              
-              for dy, dx in [[1,0], [0,1], [-1,0], [0,-1]]:
-                ny, nx = y+dy, x+dx
-
-                if ny >= 0 and ny < len(grid) and nx >= 0 and nx < len(grid[0]) and grid[ny][nx] == 1:
-                  ans -= 1
-                
-        return ans
+        return sum(sum(r2 not in range(len(grid)) or c2 not in range(len(grid[0])) or grid[r2][c2] == 0 for r2,c2 in [[r+1,c],[r-1,c],[r,c+1],[r,c-1]]) for r in range(len(grid)) for c in range(len(grid[0])) if grid[r][c] == 1)
