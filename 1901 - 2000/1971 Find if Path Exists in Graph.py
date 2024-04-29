@@ -1,20 +1,2 @@
 class Solution:
-    def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
-        g = defaultdict(list)
-
-        for v1,v2 in edges:
-            g[v1].append(v2)
-            g[v2].append(v1)
-
-        bfs = [source]
-        seen = {source}
-
-        for v in bfs:
-            if v == destination: return True
-            
-            for v2 in g[v]:
-                if v2 in seen: continue
-                seen.add(v2)
-                bfs.append(v2)
-
-        return False
+ def validPath(q,n,E,s,d):return[P:=list(range(n)),S:=P.__setitem__,F:=lambda x:[S(x,F(P[x])),P[x]][1]if P[x]!=x else P[x],U:=lambda x,y:S(F(x),F(y)),list(starmap(U,E)),F(s)==F(d)][-1]
