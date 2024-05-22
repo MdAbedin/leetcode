@@ -1,10 +1,3 @@
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
-        ans = []
-        
-        for num in range(2**(len(s)-1)):
-            indexes = [0] + [i+1 for i,c in enumerate(f"{num:b}".zfill(len(s)-1)) if c == "1"] + [len(s)]
-            partition = [s[i1:i2] for i1,i2 in zip(indexes, indexes[1:])]
-            if all(part == part[::-1] for part in partition): ans.append(partition)
-        
-        return ans
+        return [[s[i1:i2] for i1,i2 in pairwise([0,*ss,len(s)])] for l in range(len(s)) for ss in combinations(range(1,len(s)),l) if all(s2 == s2[::-1] for s2 in [s[i1:i2] for i1,i2 in pairwise([0,*ss,len(s)])])]
