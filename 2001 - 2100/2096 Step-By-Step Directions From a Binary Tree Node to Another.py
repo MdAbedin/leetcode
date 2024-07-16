@@ -1,49 +1,34 @@
 class Solution:
     def getDirections(self, root: Optional[TreeNode], startValue: int, destValue: int) -> str:
-        parents = {}
-        dfs = [root]
-        start_node = None
-        
-        while dfs:
-            cur = dfs.pop()
-            
-            if cur.val == startValue: start_node = cur
-            
-            if cur.left:
-                dfs.append(cur.left)
-                parents[cur.left] = cur
-                
-            if cur.right:
-                dfs.append(cur.right)
-                parents[cur.right] = cur
-                
+        g = defaultdict(list)
+        bfs = [root]
+        start = None
+
+        for node in bfs:
+            if node.val == startValue: start = node
+
+            for node2,d in [[node.left,"L"],[node.right,"R"]]:
+                if not node2: continue
+                g[node].append([node2,d])
+                g[node2].append([node,"U"])
+                bfs.append(node2)
+
+        bfs = [start]
+        seen = {start}
         moves = {}
-        dfs = [start_node]
-        seen = {start_node}
-        
-        while dfs:
-            cur = dfs.pop()
-            
-            if cur.val == destValue:
+
+        for node in bfs:
+            if node.val == destValue:
                 ans = []
-                
-                while cur != start_node:
-                    ans.append(moves[cur][1])
-                    cur = moves[cur][0]
-                    
+
+                while node in moves:
+                    node,move = moves[node]
+                    ans.append(move)
+
                 return "".join(ans[::-1])
-            
-            if cur in parents and parents[cur] not in seen:
-                seen.add(parents[cur])
-                dfs.append(parents[cur])
-                moves[parents[cur]] = [cur, "U"]
-                
-            if cur.left and cur.left not in seen:
-                seen.add(cur.left)
-                dfs.append(cur.left)
-                moves[cur.left] = [cur, "L"]
-                
-            if cur.right and cur.right not in seen:
-                seen.add(cur.right)
-                dfs.append(cur.right)
-                moves[cur.right] = [cur, "R"]
+
+            for node2,d in g[node]:
+                if not node2 or node2 in seen: continue
+                seen.add(node2)
+                bfs.append(node2)
+                moves[node2] = [node,d]
