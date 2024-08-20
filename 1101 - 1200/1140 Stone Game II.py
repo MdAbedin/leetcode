@@ -8,7 +8,7 @@ class Solution:
 
             for x in range(1,2*M+1):
                 s0,s1 = solve(i+x,max(M,x))
-                if sum(piles[i:i+x])+s1 > ans[0]: ans = sum(piles[i:i+x])+s1,s0
+                ans = max(ans,(sum(piles[i:i+x])+s1,s0))
 
             return ans
 
