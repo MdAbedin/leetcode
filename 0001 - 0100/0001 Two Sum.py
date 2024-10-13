@@ -1,9 +1,4 @@
 class Solution:
-    """
-    N = length of nums
-    Time:  O(N)
-    Space: O(N)
-    """
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         indexes = {}
         
