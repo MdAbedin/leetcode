@@ -1,10 +1,19 @@
 class Solution:
-    """
-    N1 = length of l1
-    N2 = length of l2    
-    Time:  O(max(N1, N2))
-    Space: O(max(N1, N2))
-    """
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        ans = []
+        carry = 0
+
+        while l1 or l2:
+            carry,digit = divmod((l1.val if l1 else 0) + (l2.val if l2 else 0) + carry,10)
+            ans.append(ListNode(digit))
+            if l1: l1 = l1.next
+            if l2: l2 = l2.next
+
+        if carry: ans.append(ListNode(carry))
+        for node1,node2 in pairwise(ans): node1.next = node2
+
+        return ans[0]
+        
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         sum_ = 0
         
