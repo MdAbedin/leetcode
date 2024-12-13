@@ -1,7 +1,6 @@
 class Solution:
     def findScore(self, nums: List[int]) -> int:
-        pq = [[num,i] for i,num in enumerate(nums)]
-        heapify(pq)
+        pq = sorted([num,i] for i,num in enumerate(nums))
         used = set()
         ans = 0
         
