@@ -8,10 +8,11 @@ class Solution:
         while bfs:
             ans.append(max(node.val for node in bfs))
 
-            for i in range(len(bfs)):
-                cur = bfs.popleft()
+            for _ in range(len(bfs)):
+                node = bfs.popleft()
 
-                if cur.left: bfs.append(cur.left)
-                if cur.right: bfs.append(cur.right)
+                for node2 in [node.left,node.right]:
+                    if not node2: continue
+                    bfs.append(node2)
 
         return ans
