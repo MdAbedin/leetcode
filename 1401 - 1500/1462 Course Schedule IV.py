@@ -1,20 +1,20 @@
 class Solution:
     def checkIfPrerequisite(self, numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]) -> List[bool]:
         g = defaultdict(list)
-        ans = []
+        is_prereq = defaultdict(lambda:False)
 
         for v1,v2 in prerequisites: g[v1].append(v2)
 
-        for v1,v2 in queries:
-            bfs = [v1]
-            seen = {v1}
+        for v in range(numCourses):
+            bfs = [v]
+            seen = {v}
 
-            for v3 in bfs:
-                for v4 in g[v3]:
-                    if v4 in seen: continue
-                    seen.add(v4)
-                    bfs.append(v4)
+            for v2 in bfs:
+                is_prereq[v,v2] = True
 
-            ans.append(v2 in seen)
+                for v3 in g[v2]:
+                    if v3 in seen: continue
+                    seen.add(v3)
+                    bfs.append(v3)
 
-        return ans
+        return [is_prereq[v1,v2] for v1,v2 in queries]
