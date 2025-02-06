@@ -1,11 +1,10 @@
 class Solution:
     def tupleSameProduct(self, nums: List[int]) -> int:
-        counts = Counter(nums[i]*nums[j] for i in range(len(nums)) for j in range(i))
+        counts = Counter()
         ans = 0
 
-        for i in range(len(nums)):
-            for j in range(i):
-                counts[nums[i] * nums[j]] -= 1
-                ans += counts[nums[i]*nums[j]]
+        for i1,i2 in combinations(range(len(nums)),2):
+            ans += counts[nums[i1]*nums[i2]]
+            counts[nums[i1]*nums[i2]] += 1
 
         return ans*8
