@@ -1,26 +1,14 @@
 class Solution:
-    def is_happy(self, s):
-        for i in range(len(s)-1):
-            if s[i] == s[i+1]:
-                return False
-            
-        return True
-    
     def getHappyString(self, n: int, k: int) -> str:
-        all_strings = ['']
-        
-        while len(all_strings) < 3**n:
-            for i in range(len(all_strings)):
-                all_strings.append(all_strings[i]+'b')
-                all_strings.append(all_strings[i]+'c')
-                all_strings[i] += 'a'
-                
-        all_strings.sort()
-        
-        for string in all_strings:
-            if self.is_happy(string):
-                k -= 1
-                if k == 0:
-                    return string
-        
-        return ''
+        if k > 3*(2**(n-1)): return ""
+
+        ans = ["bca"[(k > 2**n)-(k <= 2**(n-1))]]
+        while k > 2**(n-1): k -= 2**(n-1)
+        n -= 1
+
+        while n:
+            ans.append(("b" if ans[-1] == "a" else "a") if k <= 2**(n-1) else ("b" if ans[-1] == "c" else "c"))
+            while k > 2**(n-1): k -= 2**(n-1)
+            n -= 1
+
+        return "".join(ans)
