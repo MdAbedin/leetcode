@@ -1,14 +1,15 @@
 class Solution:
     def lenLongestFibSubseq(self, arr: List[int]) -> int:
-        nums_set = set(arr)
+        nums = set(arr)
+        ans = 0
 
-        def solve(a,b):
-            ans = 2
-            
-            while a+b in nums_set:
-                a,b = b,a+b
-                ans += 1
+        for num1,num2 in combinations(arr,2):
+            l = 2
 
-            return ans if ans >= 3 else 0
+            while num1+num2 in nums:
+                num1,num2 = num2,num1+num2
+                l += 1
 
-        return max(solve(arr[i],arr[j]) for i in range(len(arr)) for j in range(i+1,len(arr)))
+            if l >= 3: ans = max(ans,l)
+
+        return ans
