@@ -1,13 +1,12 @@
 class Solution:
     def checkValidString(self, s: str) -> bool:
-        least_opens = most_opens = 0
-        
-        for char in s:
-            least_opens += 1 if char == '(' else -1
-            most_opens += -1 if char == ')' else 1
-            least_opens = max(least_opens, 0)
-            
-            if most_opens < 0:
-                return 0
+        @cache
+        def solve(i,level):
+            if i == len(s): return level == 0
+            if level < 0: return False
 
-        return least_opens == 0
+            if s[i] == "(": return solve(i+1,level+1)
+            if s[i] == ")": return solve(i+1,level-1)
+            if s[i] == "*": return any(solve(i+1,level+x) for x in [-1,0,1])
+
+        return solve(0,0)
